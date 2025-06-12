@@ -1,0 +1,6 @@
+pandas
+#sqlite3         # ya viene con Python
+requests
+python-dotenv   # para .env
+fastapi         # para API
+uvicorn         # para correr la API
