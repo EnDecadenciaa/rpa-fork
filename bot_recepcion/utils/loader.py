@@ -1,5 +1,5 @@
 import pandas as pd
-from db.get_connection import get_connection
+from db.db_connection import get_connection
 from config import url_csv
 
 def read_csv():
