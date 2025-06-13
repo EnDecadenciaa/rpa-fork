@@ -1,7 +1,7 @@
 from db.db_connection import get_connection
 
 
-def actualizar_stock():
+def actualizar_stock(venta_id=None):
     conn = get_connection()
     if conn is None:
         print("Error al conectarse a la BD")
@@ -10,8 +10,21 @@ def actualizar_stock():
     cursor = conn.cursor()
 
     try:
-        # Traer todos los detalles de venta
-        cursor.execute("SELECT codigo_producto, cantidad FROM detalle_venta")
+        if venta_id:
+            # Get details only for the specified sale
+            cursor.execute("""
+                SELECT codigo_producto, cantidad 
+                FROM detalle_venta 
+                WHERE venta_id = ?
+            """, (venta_id,))
+        else:
+            # Get the latest sale if no ID specified
+            cursor.execute("""
+                SELECT dv.codigo_producto, dv.cantidad 
+                FROM detalle_venta dv
+                JOIN ventas v ON v.id = dv.venta_id
+                WHERE v.id = (SELECT MAX(id) FROM ventas)
+            """)
         ventas = cursor.fetchall()
 
         for codigo_producto, cantidad_vendida in ventas:

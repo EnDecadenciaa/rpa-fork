@@ -35,10 +35,11 @@ def insertar_orden(orden):
     cursor = conn.cursor()
 
     # Verificamos si ya existe la orden
-    cursor.execute("SELECT 1 FROM ventas WHERE nro_orden = ?", (orden['nro_orden'],))
-    if cursor.fetchone():
+    cursor.execute("SELECT id FROM ventas WHERE nro_orden = ?", (orden['nro_orden'],))
+    existing = cursor.fetchone()
+    if existing:
         print(f"⚠️ Orden {orden['nro_orden']} ya existe. Se omite.")
-        return
+        return existing[0]  # Return existing order ID
 
     # Insertar venta
     cursor.execute(
@@ -55,4 +56,6 @@ def insertar_orden(orden):
         )
     
     conn.commit()
+    order_id = venta_id  # Use the venta_id we already have
     conn.close()
+    return order_id
