@@ -1,0 +1,4 @@
+codigo_producto,descripcion,cantidad,fecha_ingreso,proveedor
+PRD001,Laptop HP 15",5,2025-06-13,HP Inc
+PRD002,Mouse Inalámbrico,20,2025-06-13,Logitech
+PRD003,Teclado Mecánico,10,2025-06-13,Razer
